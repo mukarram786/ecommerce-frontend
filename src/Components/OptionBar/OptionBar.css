@@ -1,0 +1,56 @@
+.navbar-link {
+  color: black;
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.navbar-link :hover {
+  color: white
+}
+
+.navbar-dropdown {
+  margin: 15px;
+  color: black;
+}
+
+.dropdown-link :hover{
+  background-color: black;
+  color:white;
+}
+
+.nav-item a {
+  text-decoration: none;
+  position: relative; /* Required to position the pseudo-element */
+}
+
+.nav-item a::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px; /* Adjust the height of the bottom border as needed */
+  bottom: 0;
+  left: 0;
+  background-color: transparent; /* Initial color of the bottom border */
+  transition: background-color 0.3s; /* Add a smooth transition effect */
+}
+
+.nav-item a:hover::before {
+  background-color: grey; /* Color of the bottom border on hover */
+}
+
+.nav-item {
+  display: inline-block;
+  margin: 0 10px; /* Adjust the spacing between links */
+}
+
+
+#productsDropdown {
+  margin-top: 15px;
+  color: black;
+  font-size: 18px;
+}
+
+#productsDropdown :hover{
+  color: white
+}

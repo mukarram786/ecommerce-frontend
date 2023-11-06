@@ -1,0 +1,51 @@
+.product-card {
+  width: 400px;
+  height: 500px;
+  padding: 20px;
+  margin: 10px 10px;
+}
+
+.product-card {
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  margin: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.card-text {
+  color: #666;
+}
+
+.card-text:last-child {
+  font-size: 20px;
+  color: #333;
+}
+
+.discount {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.discount-label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.badge-dark {
+  background-color: #343a40;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.card-image {
+  height: 200px;;
+}
