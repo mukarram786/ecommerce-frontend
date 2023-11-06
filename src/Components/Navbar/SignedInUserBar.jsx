@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../slices/userSlice";
+import { emptyCart } from "../../slices/cartSlice";
 import api from "../../services/axios";
 import {
   showSuccessNotification,
@@ -16,6 +17,7 @@ function SignedInUserBar({ loggedUser }) {
       .delete("api/v1/users/sign_out")
       .then(() => {
         dispatch(logoutUser());
+        dispatch(emptyCart());
         showSuccessNotification("Logged out Succesfully");
       })
       .catch((error) => {

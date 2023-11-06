@@ -4,6 +4,7 @@ import SignUpModal from "../SignUpModal";
 import { useSelector } from "react-redux";
 import "./Navbar.css";
 import SignedInUserBar from "./SignedInUserBar";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [showLoginModal, setLoginModal] = useState(false);
@@ -58,12 +59,12 @@ function Navbar() {
               ) : null}
 
               <li className="nav-item">
-                <a>
+                <Link to="/user-cart" className="nav-link navbar-link">
                   <i className="fa fa-shopping-cart cart text-white" />{" "}
                   <span className="text-white cart-length">
                     ({cartProducts.length})
                   </span>
-                </a>
+                </Link>
               </li>
               <SignedInUserBar loggedUser={loggedUser} />
             </ul>

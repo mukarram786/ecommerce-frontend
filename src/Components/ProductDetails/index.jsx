@@ -1,32 +1,57 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import api from "../../services/axios";
-import axios from 'axios';
-import { useParams } from 'react-router';
-import Product from '../Product';
-import './ProductDetails.css'
+import { useParams } from "react-router";
+import Product from "../Product";
+import { Pagination } from "antd";
+import "./ProductDetails.css";
 
 const ProductDetails = () => {
-  const { categoryId } = useParams();
+  const { categoryId, categoryName } = useParams();
   const [products, setProducts] = useState([]);
- 
+  const [currentPage, setCurrentPage] = useState(1); // Start from page 1
+  const [totalPages, setTotalPages] = useState(1); // Initialize to 1
+  const itemsPerPage = 5;
+
   useEffect(() => {
-    api.get(`/api/v1/categories/${categoryId}/category_product`)
-      .then(response => {
-        setProducts(response.data);
+    api
+      .get(`/api/v1/categories/${categoryId}/category_product`, {
+        params: {
+          page: currentPage,
+          per_page: itemsPerPage,
+        },
       })
-      .catch(error => {
+      .then((response) => {
+        setProducts(response.data.data);
+        setTotalPages(parseInt(response.data.meta.total_count));
+        setCurrentPage(parseInt(response.data.meta.current_page));
+      })
+      .catch((error) => {
         console.error(error);
       });
-  }, [categoryId]);
+  }, [categoryId, currentPage]);
 
-  
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
-    <div className='container'>
-      <div className='d-flex product-details-container'>
+    <div className="container">
+      <div className="">
+        <h1 className="text-center"> {categoryName}</h1>
+      </div>
+      <div className="d-flex product-details-container">
         {products.map((product, index) => {
-          return <Product product={product}/>
+          return <Product key={product.id} product={product} />;
         })}
+      </div>
+
+      <div className="text-center">
+        <Pagination
+          current={currentPage}
+          total={totalPages}
+          pageSize={itemsPerPage}
+          onChange={handlePageChange}
+        />
       </div>
     </div>
   );

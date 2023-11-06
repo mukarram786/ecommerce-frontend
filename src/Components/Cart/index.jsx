@@ -1,50 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import CartProduct from "./CartProduct";
+import emptyCartImage from "../../assets/images/empty-cart.png";
+import { useNavigate } from "react-router-dom";
+import "./Cart.css";
 
-function Cart({ product }) {
-  const [quantity, setQuantity] = useState(1);
-  const price = product.price * quantity;
-
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
+function Cart() {
+  const products = useSelector((state) => state.cart.products);
+  const [totalprice, setTotalPrice] = useState(products.reduce((acc, product) => acc + product.price, 0));
+  const navigate = useNavigate();
 
   return (
-    <div className="col-md-4">
-      <div className="card product-card">
-        <img
-          src={product.image_url}
-          className="card-img-top"
-          alt={product.title}
-        />
-        <div className="card-body">
-          <div className="d-flex justify-content-between">
-            <div>
-              <span className="counter">{quantity}</span>
-              <h5 className="card-title">{product.name}</h5>
+    <>
+      {products.length !== 0 ? (
+        <div className="container product-container">
+          <div className="text-center mb-4 mt-2">
+            <h1>CART ITEMS</h1>
+          </div>
+          {products.map((product, index) => (
+            <CartProduct
+              key={index}
+              product={product}
+              setTotalPrice={setTotalPrice}
+            />
+          ))}
+          <div class="card cart-product ">
+            <div class="card-body d-flex justify-content-around">
+              <div>TOTAL PRICE</div>
+              <div className="price">{parseFloat(totalprice).toFixed(2)} $</div>
             </div>
-            <p className="card-text">${price}</p>
           </div>
-          <p className="card-text">{product.description}</p>
-          <div className="discount">
-            <span className="discount-label">Discount:</span>
-            <span className="badge badge-pill badge-dark">
-              {product.discount_percentage}% off
-            </span>
+          <div className="text-center mt-3">
+            <button className="btn btn-outline-dark" onClick={() => navigate("/checkout")}>Proceed to Checkout</button>
           </div>
-          <div className="d-flex justify-content-between">
-            <button className="btn btn-secondary" onClick={handleDecrement}>-</button>
-            <button className="btn btn-primary" onClick={handleIncrement}>+</button>
-          </div>
-          <button className="btn btn-success btn-block">Buy Now</button>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="text-center mt-5">
+          <img src={emptyCartImage} />
+        </div>
+      )}
+    </>
   );
 }
 

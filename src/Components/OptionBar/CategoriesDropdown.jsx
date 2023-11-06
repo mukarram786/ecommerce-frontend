@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../services/axios";
+import {showSuccessNotification, showErrorNotification} from '../../Notification/Notification'
 
 function CategoriesDropdown() {
   const [categories, setCategories] = useState([]);
@@ -13,7 +14,7 @@ function CategoriesDropdown() {
         setCategories(categories);
       })
       .catch((error) => {
-        showErrorNotification(response.error);
+        showErrorNotification(error.response.data.error);
       });
   }, []);
 
@@ -28,11 +29,11 @@ function CategoriesDropdown() {
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          Categories
+          CATEGORIES
         </a>
         <ul className="dropdown-menu" aria-labelledby="productsDropdown">
           {categories.map((category, index) => {
-            const categoryUrl = `/products/${category.id}`;
+          const categoryUrl = `/products/${category.id}/${category.name}`;
 
             return (
               <li key={index} className="dropdown-link">

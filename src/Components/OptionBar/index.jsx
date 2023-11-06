@@ -6,16 +6,16 @@ import "./OptionBar.css";
 function OptionBar() {
   return (
     <>
-      <ul className="nav justify-content-center">
+      <ul className="nav justify-content-center option-bar">
         <li className="nav-item">
           <Link to="/" className="nav-link navbar-link">
-            Home
+            HOME
           </Link>
         </li>
         <CategoriesDropdown />
         <li className="nav-item">
           <Link to="/" className="nav-link navbar-link">
-            Products
+            PRODUCTS
           </Link>
         </li>
       </ul>

@@ -9,7 +9,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     loggedInUser: (state, action) => {
-      debugger
       state.user = action.payload;
     },
     logoutUser: (state) => {
