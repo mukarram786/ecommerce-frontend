@@ -1,49 +1,62 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import api from '../../services/axios';
-import './CheckoutForm.css';
-
+import {
+  showSuccessNotification,
+  showErrorNotification,
+} from "../../Notification/Notification";
+import { useDispatch } from "react-redux";
+import { emptyCart } from "../../slices/cartSlice";
+import api from "../../services/axios";
+import "./CheckoutForm.css";
+import { useNavigate } from "react-router";
 
 function CheckoutForm() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const cartProducts = useSelector((state) => state.cart.products);
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
   const [paymentMethod, setMethodPayment] = useState("");
-  debugger
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    let cartItems = cartProducts.map((product)=> ({id: product.id, price: product.price}))
-    api.post(`/api/v1/orders/`, {
-      params: {
+    let cartItems = cartProducts.map((product) => ({
+      id: product.id,
+      price: product.price,
+    }));
+
+    api
+      .post(`/api/v1/orders/`, {
         order: {
-        cartItems: cartItems,
-        payment_method: paymentMethod
-        }
-      },
-    })
-    .then((response) => {
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+          cartItems: cartItems,
+          payment_method: paymentMethod,
+        },
+      })
+      .then((response) => {
+        showSuccessNotification(response.data.message);
+        dispatch(emptyCart());
+        navigate("/");
+      })
+      .catch((error) => {
+        showErrorNotification(response.data.error);
+      });
   };
 
   const handlePaymentMethodChange = (e) => {
-    setMethodPayment(e.target.value)
-  }
-
+    setMethodPayment(e.target.value);
+  };
+debugger
   return (
-    <div className="checkout-container">
+    <div className="checkout-container mt-5">
       <h2 className="checkout-title">Checkout Form</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="row">
           <div className="col-lg-6">
             <label>First Name</label>
-            <input type="text" value={user.firstName} required />
+            <input type="text" value={user.first_name} required />
           </div>
           <div className="col-lg-6">
             <label>Last Name</label>
-            <input type="text" value={user.lastName} required />
+            <input type="text" value={user.last_namee} required />
           </div>
         </div>
         <div className="row">
@@ -53,53 +66,50 @@ function CheckoutForm() {
           </div>
           <div className="col-lg-6">
             <label>Phone Number</label>
-            <input type="tel" value={user.phoneNumber} required />
+            <input type="tel" value={user.phone_no} required />
           </div>
         </div>
         <div className="row">
           <div className="col-lg-12">
             <label>Shipping Address</label>
             <textarea
-              value={user.shippingAddress}
+              value={user.address}
               className="checkout-form-textarea"
               required
             />
           </div>
         </div>
-        <div className="row">
-          <div className="col-lg-4">
-            <label>Payment Method</label>
-          </div>
-          <div className="col-lg-4">
-            <div className="d-flex">
-              <label>
-                Payment by Cash
-              </label>
+        <div className="d-flex">
+          <div className="col-lg-5">
+            <div className="d-flex align-items-center">
               <input
-                   style={{width: "15px", height: "15px"}}
-                  type="radio"
-                  value="cash_on_delivery"
-                  className="ml-5"
-                  onChange={handlePaymentMethodChange}
-                />
+                type="radio"
+                id="cashPayment"
+                value="cash_on_delivery"
+                onChange={handlePaymentMethodChange}
+                disabled={paymentMethod === "card_payment"}
+
+              />
+              <label htmlFor="cashPayment">Payment by Cash</label>
             </div>
           </div>
-          <div className="col-lg-4">
-            <div className="d-flex">
-              <label>
-                Payment by Card
-              </label>
+          <div className="col-lg-5">
+            <div className="d-flex align-items-center">
               <input
-                  style={{width: "15px", height: "15px"}}
-                  type="payment_by_card"
-                  value=""
-                  onChange={handlePaymentMethodChange}
-                />
+                type="radio"
+                id="cardPayment"
+                value="card_payment"
+                onChange={handlePaymentMethodChange}
+                disabled={paymentMethod === "cash_on_delivery"}
+              />
+              <label htmlFor="cardPayment">Payment by Card</label>
             </div>
           </div>
         </div>
 
-        <button type="submit" className="checkout-btn btn btn-dark">Place Order</button>
+        <button type="submit" className="checkout-btn btn btn-dark">
+          Place Order
+        </button>
       </form>
     </div>
   );

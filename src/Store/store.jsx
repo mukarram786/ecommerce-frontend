@@ -4,10 +4,12 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage'; 
 import cartReducer from '../slices/cartSlice'
 import userReducer from '../slices/userSlice';
+import filterReducer from '../slices/filterSlice'
 
 const rootReducer = combineReducers({
   user: userReducer,
   cart: cartReducer,
+  filter: filterReducer
 });
 
 const persistConfig = {

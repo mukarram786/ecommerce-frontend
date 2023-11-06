@@ -28,8 +28,8 @@ function CartProduct({ product, setTotalPrice }) {
 
   return (
     <>
-      <div class="card mb-3 cart-product">
-        <div class="card-body">
+      <div className="card mb-3 cart-product">
+        <div className="card-body">
           <div className="row">
             <div className="col-lg-2">
               <img
@@ -39,7 +39,7 @@ function CartProduct({ product, setTotalPrice }) {
             </div>
             <div className="col-lg-8 mt-1">
               <div className="d-flex justify-content-between mb-3">
-                <div>{product.name}</div>
+                <div className="product-cart">{product.name}</div>
                 <div className="d-flex">
                   <button
                     className="btn btn-danger ml-4 plus-quantity"
@@ -59,8 +59,8 @@ function CartProduct({ product, setTotalPrice }) {
               </div>
             </div>
             <div className="col-lg-2 mt-1">
-              <button class="btn btn-danger rounded-circle" onClick={deleteCartItem}>
-                <i class="fa fa-trash"></i>
+              <button className="btn btn-danger rounded-circle" onClick={deleteCartItem}>
+                <i className="fa fa-trash"></i>
               </button>
             </div>
           </div>

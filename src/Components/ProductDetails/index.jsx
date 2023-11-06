@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import Product from "../Product";
 import { Pagination } from "antd";
 import "./ProductDetails.css";
+import { useSelector } from "react-redux";
 
 const ProductDetails = () => {
   const { categoryId, categoryName } = useParams();
@@ -11,6 +12,7 @@ const ProductDetails = () => {
   const [currentPage, setCurrentPage] = useState(1); // Start from page 1
   const [totalPages, setTotalPages] = useState(1); // Initialize to 1
   const itemsPerPage = 5;
+  const SearchPrams =  useSelector(state => state.filter.filter)
 
   useEffect(() => {
     api
@@ -18,6 +20,7 @@ const ProductDetails = () => {
         params: {
           page: currentPage,
           per_page: itemsPerPage,
+          q: SearchPrams ? SearchPrams.term.search : ''
         },
       })
       .then((response) => {
@@ -28,14 +31,14 @@ const ProductDetails = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, [categoryId, currentPage]);
+  }, [categoryId, currentPage, SearchPrams]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
   return (
-    <div className="container">
+    <div className="container mt-5">
       <div className="">
         <h1 className="text-center"> {categoryName}</h1>
       </div>

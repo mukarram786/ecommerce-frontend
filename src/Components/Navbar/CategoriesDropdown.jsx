@@ -22,7 +22,7 @@ function CategoriesDropdown() {
     <>
       <li className="nav-item dropdown navbar-dropdown">
         <a
-          className="nav-link dropdown-toggle"
+          className="nav-link dropdown-toggle text-white"
           href="#"
           id="productsDropdown"
           role="button"

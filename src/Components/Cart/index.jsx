@@ -24,8 +24,8 @@ function Cart() {
               setTotalPrice={setTotalPrice}
             />
           ))}
-          <div class="card cart-product ">
-            <div class="card-body d-flex justify-content-around">
+          <div className="card cart-product ">
+            <div className="card-body d-flex justify-content-around">
               <div>TOTAL PRICE</div>
               <div className="price">{parseFloat(totalprice).toFixed(2)} $</div>
             </div>

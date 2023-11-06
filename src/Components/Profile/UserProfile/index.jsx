@@ -34,7 +34,6 @@ function UserProfile() {
 
   // Function to update the user profile
   const updateUserProfile = async() => {
-    debugger
     api
     .patch(`api/v1/users/${4}/update_profile`, {user: userData})
     .then((response) => {
