@@ -22,6 +22,7 @@ function CheckoutForm() {
     let cartItems = cartProducts.map((product) => ({
       id: product.id,
       price: product.price,
+      quantity: product.quantity
     }));
 
     api
@@ -56,7 +57,7 @@ debugger
           </div>
           <div className="col-lg-6">
             <label>Last Name</label>
-            <input type="text" value={user.last_namee} required />
+            <input type="text" value={user.last_name} required />
           </div>
         </div>
         <div className="row">
@@ -87,8 +88,7 @@ debugger
                 id="cashPayment"
                 value="cash_on_delivery"
                 onChange={handlePaymentMethodChange}
-                disabled={paymentMethod === "card_payment"}
-
+                disabled={paymentMethod === "payment_by_card"}
               />
               <label htmlFor="cashPayment">Payment by Cash</label>
             </div>
@@ -98,7 +98,7 @@ debugger
               <input
                 type="radio"
                 id="cardPayment"
-                value="card_payment"
+                value="payment_by_card"
                 onChange={handlePaymentMethodChange}
                 disabled={paymentMethod === "cash_on_delivery"}
               />
@@ -107,7 +107,7 @@ debugger
           </div>
         </div>
 
-        <button type="submit" className="checkout-btn btn btn-dark">
+        <button type="submit" className="btn btn-dark">
           Place Order
         </button>
       </form>

@@ -7,7 +7,7 @@ import DashbaordProducts from "./DashbaordProducts";
 function Home() {
   return (
     <>
-      <div className="container crousel-container">
+      <div className="container crousel-container mt-4">
         <Carousel />
         <DashbaordProducts />
       </div>

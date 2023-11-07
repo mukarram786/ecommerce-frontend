@@ -3,20 +3,19 @@ import { Link } from "react-router-dom";
 import api from "../../services/axios";
 import {showSuccessNotification, showErrorNotification} from '../../Notification/Notification'
 
-function CategoriesDropdown() {
+function CategoriesDropdown(loggedUser) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     api
       .get("api/v1/categories")
       .then((response) => {
-        const categories = response.data;
-        setCategories(categories);
+        setCategories(response.data);
       })
       .catch((error) => {
-        showErrorNotification(error.response.data.error);
+        // showErrorNotification(error.response.data.error);
       });
-  }, []);
+  }, [loggedUser]);
 
   return (
     <>
@@ -29,7 +28,7 @@ function CategoriesDropdown() {
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          CATEGORIES
+          Categories
         </a>
         <ul className="dropdown-menu" aria-labelledby="productsDropdown">
           {categories.map((category, index) => {

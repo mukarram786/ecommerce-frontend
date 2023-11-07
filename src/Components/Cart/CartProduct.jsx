@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { removeProduct } from '../../slices/cartSlice'
-import {showSuccessNotification, showErrorNotification} from '../../Notification/Notification'
+import {updateProductQuantity} from '../../slices/cartSlice'
+import {showSuccessNotification} from '../../Notification/Notification'
 import { useDispatch } from "react-redux";
 
 function CartProduct({ product, setTotalPrice }) {
@@ -11,13 +12,16 @@ function CartProduct({ product, setTotalPrice }) {
   const handleIncrement = () => {
     setQuantity(quantity + 1);
     setTotalPrice((prevPrice) => prevPrice + product.price);
+    dispatch(updateProductQuantity({id: product.id, quantity: quantity}))
   };
 
   const handleDecrement = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
       setTotalPrice((prevPrice) => prevPrice - product.price);
+      dispatch(updateProductQuantity({id: product.id, quantity: quantity}))
     }
+
   };
 
   const deleteCartItem = () => {
